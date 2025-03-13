@@ -135,7 +135,7 @@ export default function Home() {
                       Datas Disponíveis
                     </label>
                     {availableDates.length > 0 ? (
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                         {availableDates.map((date) => (
                           <button
                             key={date}
