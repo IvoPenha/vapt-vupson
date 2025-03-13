@@ -94,7 +94,7 @@ export default function Home() {
         Por favor, tente novamente mais tarde ou selecione outra unidade.
       </p>
       <p className="text-gray-500 mt-2 text-sm">
-        Ao selecionar uma unidades, os horários disponíveis serão atualizados. <span className="text-xs">Valores apenas para mês atual></span>
+        Ao selecionar uma unidades, os horários disponíveis serão atualizados. <span className="text-xs">Valores apenas para mês atual</span>
       </p>
     </div>
   );
@@ -155,7 +155,13 @@ export default function Home() {
                   </div>
 
                   {/* Available Time Slots */}
-                  {selectedDate && availableTimeSlots.length > 0 && (
+                  {
+                  selectedDate ?
+                  !availableTimeSlots.length ?
+                  <div className="text-center text-gray-600 max-w-[50%] mx-auto">
+                    Ops! Essa data ta sendo preenchida agora, tenta daqui 10 minutinhos dnv se ainda aparecer 😎
+                  </div>
+                  : (
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                         <Clock className="w-4 h-4" />
@@ -172,7 +178,7 @@ export default function Home() {
                         ))}
                       </div>
                     </div>
-                  )}
+                  ) : null}
 
                   {isLoading && (
                     <div className="text-center text-gray-600 max-w-[50%] mx-auto">
