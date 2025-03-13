@@ -113,7 +113,7 @@ export default function Home() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue={getDefaultTab()} onValueChange={handleTabChange} className="space-y-6">
-              <TabsList className="w-full grid grid-cols-3">
+              <TabsList className="w-full grid grid-cols-4">
                 {unidades.map((unidade) => (
                   <TabsTrigger
                     key={unidade.value}
@@ -132,7 +132,7 @@ export default function Home() {
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
-                      Datas Disponíveis
+                      Datas Disponíveis para Agendamento unidade: {unidade.name}
                     </label>
                     {availableDates.length > 0 ? (
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
