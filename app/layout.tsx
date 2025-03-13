@@ -7,9 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Vapt Vuptson',
-  description: 'Fins pessoais - Ver disponibilidade de atendimento',
-  lang: 'pt-BR',
-  viewport: 'width=device-width, initial-scale=1',
+  description: 'Fins pessoais - Ver disponibilidade de atendimento' 
 };
 
 export default function RootLayout({
