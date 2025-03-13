@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
-import { Calendar, MapPin, Clock, CalendarX } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Calendar, MapPin, Clock, CalendarX } from 'lucide-react'; 
 import { EUnidades } from '@/lib/types';
 import { fetchAvailableMonthDates, fetchAvailableTimeSlots } from '@/lib/api';
 import {
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
 
 const unidades = [
   { id: EUnidades.MESSEJANA, name: 'Messejana', value: 'messejana' },
@@ -23,13 +23,26 @@ const unidades = [
   { id: EUnidades.PARANGABA, name: 'Parangaba', value: 'parangaba' },
 ];
 
+const EmptyState = () => (
+  <div className="text-center py-8">
+    <CalendarX className="w-16 h-16 mx-auto text-gray-400 mb-4" />
+    <h3 className="text-lg font-medium text-gray-900 mb-2">
+      Nenhum horário disponível
+    </h3>
+    <p className="text-gray-500">
+      No momento não há horários disponíveis para esta unidade.
+      Por favor, tente novamente mais tarde ou selecione outra unidade.
+    </p>
+  </div>
+);
+
 export default function Home() {
   const [selectedUnit, setSelectedUnit] = useState<number>(EUnidades.CENTRO);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [availableDates, setAvailableDates] = useState<string[]>([]);
   const [availableTimeSlots, setAvailableTimeSlots] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedUnitName, setSelectedUnitName] = useState<string>(unidades[1].name);
+  const [selectedUnitName, setSelectedUnitName] = useState<string>(unidades?.[1]?.name);
 
   const currentMonth = format(new Date(), 'MM/yyyy');
 
@@ -47,8 +60,8 @@ export default function Home() {
     setIsLoading(true);
     try {
       const response = await fetchAvailableMonthDates(selectedUnit, currentMonth);
-      setAvailableDates(response.value.diasDoMes);
-      if (response.value.diasDoMes.length > 0) {
+      setAvailableDates(response?.value?.diasDoMes);
+      if (response?.value?.diasDoMes?.length > 0) {
         setSelectedDate(response.value.diasDoMes[0]);
       }
     } catch (error) {
@@ -83,22 +96,6 @@ export default function Home() {
     return unit?.value || unidades[0].value;
   };
 
-  const EmptyState = () => (
-    <div className="text-center py-8">
-      <CalendarX className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-      <h3 className="text-lg font-medium text-gray-900 mb-2">
-        Nenhum horário disponível
-      </h3>
-      <p className="text-gray-500">
-        No momento não há horários disponíveis para esta unidade.
-        Por favor, tente novamente mais tarde ou selecione outra unidade.
-      </p>
-      <p className="text-gray-500 mt-2 text-sm">
-        Ao selecionar uma unidades, os horários disponíveis serão atualizados. <span className="text-xs">Valores apenas para mês atual</span>
-      </p>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-4xl mx-auto px-4">
@@ -109,7 +106,10 @@ export default function Home() {
             </CardTitle>
             <CardDescription className="text-center text-gray-600">
               Horários disponíveis para emissão de identidade na unidade: {selectedUnitName}
-            </CardDescription>
+            </CardDescription> 
+            <p className="text-gray-500 mt-2 text-sm">
+              Ao selecionar uma unidades, os horários disponíveis serão atualizados. 
+            </p><span className="text-xs">Valores apenas para mês atual</span>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue={getDefaultTab()} onValueChange={handleTabChange} className="space-y-6">
@@ -137,18 +137,12 @@ export default function Home() {
                     {availableDates.length > 0 ? (
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                         {availableDates.map((date) => (
-                          <button
+                          <Button
                             key={date}
-                            onClick={() => setSelectedDate(date)}
-                            className={cn(
-                              "p-3 rounded-lg text-sm font-medium transition-colors",
-                              selectedDate === date
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-secondary hover:bg-secondary/80"
-                            )}
+                            onClick={() => setSelectedDate(date)} 
                           >
                             {date}
-                          </button>
+                          </Button>
                         ))}
                       </div>
                     ) : !isLoading && <EmptyState />}
