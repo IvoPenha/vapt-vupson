@@ -93,6 +93,9 @@ export default function Home() {
         No momento não há horários disponíveis para esta unidade.
         Por favor, tente novamente mais tarde ou selecione outra unidade.
       </p>
+      <p className="text-gray-500 mt-2 text-sm">
+        Ao selecionar uma unidades, os horários disponíveis serão atualizados. <span className="text-xs">Valores apenas para mês atual></span>
+      </p>
     </div>
   );
 
