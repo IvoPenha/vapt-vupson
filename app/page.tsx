@@ -156,7 +156,7 @@ export default function Home() {
 
                   {/* Available Time Slots */}
                   {
-                  selectedDate ?
+                  selectedDate && availableDates?.length ?
                   !availableTimeSlots.length ?
                   <div className="text-center text-gray-600 max-w-[50%] mx-auto">
                     Ops! Essa data ta sendo preenchida agora, tenta daqui 10 minutinhos dnv se ainda aparecer 😎
